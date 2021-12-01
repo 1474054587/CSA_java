@@ -1,0 +1,113 @@
+create database if not exists csa_java_mysql character set utf8;
+use csa_java_mysql;
+create table cqupt_student (
+	studentid varchar(10),
+	name varchar(20),
+	sex varchar(2),
+	age integer,
+	Fee decimal(10,2),
+	address varchar(50),
+	memo varchar(300)
+); -- 第1题
+create table CourseAa (
+	Aa1 varchar(20),
+	Aa2 integer,
+	Aa3 decimal(10) 
+); -- 第2题
+create table ChooseBb (
+	Bb1 varchar(30),
+	Bb2 integer,
+	Bb3 decimal(6) 
+); -- 第3题
+alter table ChooseBb add Bb4 varchar(20) default "系统测试值"; -- 第4题
+alter table choosebb add Bb5 varchar(10) primary key; -- 第5题
+create view view_choosebb(view_bb1,view_bb2,view_bb3) as 
+	select bb1,bb4,bb5 from choosebb; -- 第6题
+drop view if exists view_choosebb; -- 第7题
+create index index_bb2 on choosebb(Bb2 asc);
+create index index_bb4 on choosebb(Bb4 desc); -- 第8题
+drop index index_bb2 on choosebb; -- 第9题
+create table test(
+	Name varchar(20),
+	Age integer,
+	Score NUMERIC(10,2),
+	Address varchar(60)
+); -- 第10题
+insert into test values
+	('赵一',20,580.00,'重邮宿舍 12-3-5'),
+	('钱二',19,540.00,'南福苑 5-2-9'),
+	('孙三',21,555.50,'学生新区 21-5-15'),
+	('李四',22,505.00,'重邮宿舍 8-6-22'),
+	('周五',20,495.50,'学生新区 23-4-8'),
+	('吴六',19,435.00,'南福苑 2-5-12'); -- 第11题
+create table test_temp(
+	Name varchar(20),
+	Age integer,
+	Score NUMERIC(10,2),
+	Address varchar(60)
+); -- 第12题
+insert into test_temp values
+	('郑七',21,490.50,'重邮宿舍 11-2-1'),
+	('张八',20,560.00,'南福苑 3-3-3'),
+	('王九',10,560.00,'学生新区 19-7-1'); -- 第13题
+insert into test select * from test_temp; -- 第14题
+update test set Score = Score + 5 where Age <= 20; -- 第15题
+update test set Age = Age -1 where Address like "南福苑%"; -- 第16题
+delete from test where Age>=21 and Score>=500; -- 第17题
+delete from test where Score<550 and Address like "重邮宿舍%"; -- 第18题
+create table Student(
+	SNO varchar(15),
+	Name varchar(10),
+	Age integer,
+	College varchar(30)
+); -- 第19题
+create table Course(
+	CourseID varchar(15),
+	CourserName varchar(30),
+	CourseBeforeID varchar(15)
+); -- 第20题
+create table Choose(
+	SNO varchar(20),
+	CourseID varchar(30),
+	Score DECIMAL(5,2)
+); -- 第21题
+insert into Student values
+	("S00001","张三",20,"计算机学院"),
+	("S00002","李四",19,"通信学院"),
+	("S00003","王五",21,"计算机学院"); -- 第22题
+insert into Course (CourseID,CourserName) values ('C1','计算机引论');
+insert into Course values
+	("C2","C语言","C1"),
+	("C3","数据结构","c2"); -- 第23题
+insert into Choose values
+	("S00001","C1",95),
+	("S00001","C2",80),
+	("S00001","C3",84),
+	("S00002","C1",80),
+	("S00002","C2",85),
+	("S00003","C1",78),
+	("S00003","C3",70); -- 第24题
+select SNO,Name from Student where College like "计算机学院"; -- 第25题
+select * from Student where Age between 20 and 23; -- 第26题
+select count(*) from Student; -- 第27题
+select max(Score) from Choose where CourseID='C1';
+select min(Score) from Choose where CourseID='C1';
+select sum(Score) from Choose where CourseID='C1';
+select avg(Score) from Choose where CourseID='C1'; -- 第28题
+select CourseID,CourserName from Course where isnull(CourseBeforeID); -- 第29题
+select Student.SNO,Name,CourseID,Score
+	from Student inner join Choose on Student.SNO=Choose.SNO; -- 第30题
+select * from student a where exists(
+	select College from student b where b.name='张三'and b.college=a.college
+) and a.Name!='张三'; -- 第31题
+select Choose.SNO,Score from 
+		Student inner join Choose on Student.SNO=Choose.SNO
+	where Name!='张三' and CourseID='C1' and Score<(
+		select Score from
+				Student inner join Choose on Student.SNO=Choose.SNO
+			where name='张三' and CourseID='C1'
+	); -- 第32题
+select SNO from Choose where CourseID='C1';
+union
+select SNO from Choose where CourseID='C3'; -- 第33题
+select distinct SNO from Choose where CourseID='C1' or CourseID='C3'; -- 第34题
