@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csa.dao.AccountDao">
+    <!--1查询所有记录-->
+    <select id="findAll" resultType="com.csa.pojo.Account">
+        select * from csa_java_mysql.Account;
+    </select>
+    <!--2通过id删除记录-->
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from csa_java_mysql.Account where id=#{id};
+    </delete>
+    <!--3插入记录-->
+    <insert id="insert" parameterType="com.csa.pojo.Account">
+        insert into csa_java_mysql.Account (id,name,money,createtime,updatetime) values (
+            #{id},#{name},#{money},#{createtime},#{updatetime});
+    </insert>
+    <!--4通过id查找对象-->
+    <select id="selectByPrimaryKey" parameterType="String" resultType="com.csa.pojo.Account">
+        select * from csa_java_mysql.Account where id=#{id};
+    </select>
+    <!--5更新Account-->
+    <update id="updateByPrimaryKey" parameterType="com.csa.pojo.Account">
+        update csa_java_mysql.Account
+        set name=#{name},money=#{money},createtime=#{createtime},updatetime=#{updatetime}
+        where id=#{id};
+    </update>
+</mapper>
