@@ -15,11 +15,18 @@ p {
     color: #fff;
 }
 a {
-    color: #95F204;
+    color: #95F204;    
+    text-decoration: none;
 }
 .button {
     background-color: #38AF98;
     border: 5px solid #38AF98;
     border-radius: 3px;
     color: #fff;
+}
+.in {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    outline: none;
+    user-select: none;
 }
